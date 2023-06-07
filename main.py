@@ -30,13 +30,13 @@ def main():
     # Create a recurring RevenueSegment for the Contract
     revenue_segment = RevenueSegment(
         contract=contract,
-        delay_rev_start_mths=0,
-        delay_inv_from_rev_mths=4,
-        length_rev_mths=5,
+        delay_rev_start_mths=1,
+        delay_inv_from_rev_mths=1,
+        length_rev_mths=2,
         amount=100.00,
         type='Product',
         name='Recurring License Revenue',
-        invoice_schedule='Upfront',
+        invoice_schedule='Monthly',
     )
 
     # Add the revenue segment to the contract
@@ -79,8 +79,17 @@ def main():
         for i in range(issue_month, num_months):
             df.loc[i, 'AR'] += invoice.amount
             if segment.delay_inv_from_rev_mths > 0:
-                df.loc[i, 'UnbilledRev'] -= segment.delay_inv_from_rev_mths * segment.amount
-                df.loc[i, 'DefRev'] += (segment.length_rev_mths - segment.delay_inv_from_rev_mths) * segment.amount
+                if segment.delay_inv_from_rev_mths > segment.length_rev_mths:
+                    df.loc[i, 'UnbilledRev'] -= invoice.amount
+                else:
+                    if segment.invoice_schedule == 'Monthly':
+                        if issue_month < booked_month + segment.delay_rev_start_mths + segment.length_rev_mths:
+                            df.loc[i, 'DefRev'] += invoice.amount
+                        elif issue_month >= booked_month + segment.delay_rev_start_mths + segment.length_rev_mths:
+                            df.loc[i, 'UnbilledRev'] -= invoice.amount
+                    else:
+                        df.loc[i, 'UnbilledRev'] -= segment.delay_inv_from_rev_mths * segment.amount
+                        df.loc[i, 'DefRev'] += (segment.length_rev_mths - segment.delay_inv_from_rev_mths) * segment.amount
             else:
                 df.loc[i, 'DefRev'] += invoice.amount    
 
