@@ -91,7 +91,7 @@ class RevenueSegment(Base):
             )
             self.invoices.append(invoice)
         elif self.invoice_schedule == 'Monthly':
-            for i in range(self.length_mths):
+            for i in range(self.length_rev_mths):
                 invoice = Invoice(
                     months_delay=self.delay_rev_start_mths + delay_inv_from_rev_mths + i,
                     amount=self.amount,

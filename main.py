@@ -2,6 +2,7 @@ from datetime import datetime, timedelta
 from models import Customer, Contract, RevenueSegment, Invoice
 from database import reset_and_init_db, Session
 import pandas as pd
+import display
 
 def main():
     reset_and_init_db()
@@ -29,9 +30,9 @@ def main():
     # Create a recurring RevenueSegment for the Contract
     revenue_segment = RevenueSegment(
         contract=contract,
-        delay_rev_start_mths=5,
-        delay_inv_from_rev_mths=-3,
-        length_rev_mths=4,
+        delay_rev_start_mths=0,
+        delay_inv_from_rev_mths=4,
+        length_rev_mths=5,
         amount=100.00,
         type='Product',
         name='Recurring License Revenue',
@@ -47,7 +48,7 @@ def main():
     num_months = 13
 
     # Initialize dataframe with zero values
-    df = pd.DataFrame(0, index=range(1, num_months), columns=['TCV', 'DefRev', 'UnbilledRev', 'Rev', 'AR', 'Cash'])
+    df = pd.DataFrame(0, index=range(1, num_months), columns=['TCV', 'Rev', 'DefRev', 'UnbilledRev', 'AR', 'Cash'])
 
     # Query all objects
     revenue_segments = session.query(RevenueSegment).all()
@@ -72,18 +73,14 @@ def main():
                     df.loc[j, 'DefRev'] -= segment.amount
 
     for invoice in invoices:
-        print('processing invoice')
         issue_month = invoice.issue_mth
         paid_month = invoice.issue_mth + invoice.mths_payable
 
         for i in range(issue_month, num_months):
             df.loc[i, 'AR'] += invoice.amount
             if segment.delay_inv_from_rev_mths > 0:
-                if i > booked_month + segment.delay_rev_start_mths + segment.length_rev_mths:
-                    df.loc[i, 'UnbilledRev'] -= invoice.amount
-                else:
-                    df.loc[i, 'UnbilledRev'] -= segment.delay_inv_from_rev_mths * segment.amount
-                    df.loc[i, 'DefRev'] += (segment.length_rev_mths - segment.delay_inv_from_rev_mths) * segment.amount
+                df.loc[i, 'UnbilledRev'] -= segment.delay_inv_from_rev_mths * segment.amount
+                df.loc[i, 'DefRev'] += (segment.length_rev_mths - segment.delay_inv_from_rev_mths) * segment.amount
             else:
                 df.loc[i, 'DefRev'] += invoice.amount    
 
@@ -92,7 +89,7 @@ def main():
             df.loc[i, 'AR'] -= invoice.amount
 
     # Display the dataframe
-    print(df.T)
+    display.display_df(df)
 
     # Close the session
     session.close()
