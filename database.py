@@ -1,6 +1,6 @@
 from sqlalchemy import create_engine, MetaData
 from sqlalchemy.orm import sessionmaker
-from models import Base  # Assuming models.py is in the same directory
+from defs import Base  # Assuming models.py is in the same directory
 
 engine = create_engine('postgresql://dev:revbotdev@localhost/myrevbot')
 Session = sessionmaker(bind=engine)

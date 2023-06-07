@@ -1,5 +1,5 @@
 from datetime import datetime, timedelta
-from models import Customer, Contract, RevenueSegment, Invoice
+from defs import Customer, Contract, RevenueSegment, Invoice
 from database import reset_and_init_db, Session
 import pandas as pd
 import display
