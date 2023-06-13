@@ -1,55 +1,7 @@
-from sqlalchemy import Column, Integer, String, Enum, ForeignKey
+from .base import Base
+from .invoice import *
+from sqlalchemy import Column, Integer, String, ForeignKey, Enum
 from sqlalchemy.orm import relationship
-from sqlalchemy.ext.declarative import declarative_base
-
-Base = declarative_base()
-
-class Customer(Base):
-    __tablename__ = 'customers'
-
-    id = Column(Integer, primary_key=True)
-    name = Column(String)
-
-    contracts = relationship("Contract", back_populates="customer")
-
-    def __init__(self, name):
-        self.name = name
-
-class Contract(Base):
-    __tablename__ = 'contracts'
-    
-    id = Column(Integer, primary_key=True)
-    booked_month = Column(Integer)
-
-    # Parent is Customer
-    customer_id = Column(Integer, ForeignKey('customers.id')) 
-    customer = relationship("Customer", back_populates="contracts")
-
-    # Children are RevenueSegments
-    revenue_segments = relationship("RevenueSegment", back_populates="contract")
-
-    def __init__(self, booked_month):
-        self.booked_month = booked_month
-
-class Invoice(Base):
-    __tablename__ = 'invoices'
-
-    id = Column(Integer, primary_key=True)
-    issue_mth = Column(Integer)
-    amount = Column(Integer)
-    mths_payable = Column(Integer)
-
-    # Parent is RevenueSegment
-    revenue_segment_id = Column(Integer, ForeignKey('revenue_segments.id'))
-    revenue_segment = relationship("RevenueSegment", back_populates="invoices")
-
-    def __init__(self, months_delay, amount, mths_payable, contract_booked_month):
-        super().__init__()
-        self.amount = amount
-        self.mths_payable = mths_payable
-
-        # Set the issue month based on the delay
-        self.issue_mth = contract_booked_month + months_delay
 
 class RevenueSegment(Base):
     __tablename__ = 'revenue_segments'
@@ -102,3 +54,17 @@ class RevenueSegment(Base):
 
     def get_total_revenue(self):
         return sum([invoice.amount for invoice in self.invoices])
+    
+    def serialize(self):
+        return {
+            'id': self.id,
+            'delay_rev_start_mths': self.delay_rev_start_mths,
+            'length_rev_mths': self.length_rev_mths,
+            'delay_inv_from_rev_mths': self.delay_inv_from_rev_mths,
+            'amount': self.amount,
+            'name': self.name,
+            'type': self.type,
+            'invoice_schedule': self.invoice_schedule,
+            'invoices': [invoice.serialize() for invoice in self.invoices],
+            'unbilled_balance': self.get_unbilled_balance()
+        }

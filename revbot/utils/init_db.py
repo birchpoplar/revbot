@@ -1,9 +1,10 @@
 from sqlalchemy import create_engine, MetaData
 from sqlalchemy.orm import sessionmaker
-from defs import Base  # Assuming models.py is in the same directory
 
-engine = create_engine('postgresql://dev:revbotdev@localhost/myrevbot')
+engine = create_engine('postgresql://dev:revbotdev@localhost/myrevbot', echo=True)
 Session = sessionmaker(bind=engine)
+
+from revbot.models import Base, Customer, Contract, RevenueSegment, Invoice 
 
 def reset_and_init_db():
     # First reflect and drop all tables to delete contents of database
@@ -13,3 +14,9 @@ def reset_and_init_db():
 
     # Then create all tables
     Base.metadata.create_all(engine)
+
+def create_session():
+    return Session()
+
+def remove_session(session):
+    session.close()

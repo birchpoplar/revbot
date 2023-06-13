@@ -1,8 +1,6 @@
-from defs import Customer, Contract, RevenueSegment, Invoice
-from model import populate_dataframe
-from database import reset_and_init_db, Session
+from revbot.models import Customer, Contract, RevenueSegment, Invoice
+from revbot.utils import reset_and_init_db, Session, populate_dataframe, display
 import pandas as pd
-import display
 
 def main():
     reset_and_init_db()
@@ -30,10 +28,10 @@ def main():
     # Create a recurring RevenueSegment for the Contract
     revenue_segment = RevenueSegment(
         contract=contract,
-        delay_rev_start_mths=1,
-        delay_inv_from_rev_mths=1,
+        delay_rev_start_mths=2,
+        delay_inv_from_rev_mths=2,
         length_rev_mths=7,
-        amount=100.00,
+        amount=210.00,
         type='Product',
         name='Recurring License Revenue',
         invoice_schedule='Upfront',
