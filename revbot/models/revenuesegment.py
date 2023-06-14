@@ -21,7 +21,7 @@ class RevenueSegment(Base):
     contract = relationship("Contract", back_populates="revenue_segments")
 
     # Children are Invoices
-    invoices = relationship("Invoice", back_populates="revenue_segment")
+    invoices = relationship("Invoice", back_populates="revenue_segment", cascade="all, delete, delete-orphan")
 
     def __init__(self, contract, amount, name, type, delay_rev_start_mths, length_rev_mths, delay_inv_from_rev_mths=0, invoice_schedule='Upfront'):
         self.contract = contract

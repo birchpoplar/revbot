@@ -13,7 +13,7 @@ class Contract(Base):
     customer = relationship("Customer", back_populates="contracts")
 
     # Children are RevenueSegments
-    revenue_segments = relationship("RevenueSegment", back_populates="contract")
+    revenue_segments = relationship("RevenueSegment", back_populates="contract", cascade="all, delete, delete-orphan")
 
     def __init__(self, booked_month):
         self.booked_month = booked_month

@@ -8,7 +8,7 @@ class Customer(Base):
     id = Column(Integer, primary_key=True)
     name = Column(String)
 
-    contracts = relationship("Contract", back_populates="customer")
+    contracts = relationship("Contract", back_populates="customer", cascade="all, delete, delete-orphan")
 
     def __init__(self, name):
         self.name = name

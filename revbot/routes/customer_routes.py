@@ -4,14 +4,21 @@ from sqlalchemy import exc
 
 customer_routes = Blueprint('customer_routes', __name__) 
 
-# Routes to create customers
+# Routes to create and delete customers
 
 @customer_routes.route('/customers', methods=['POST'])
 def create_customer():
     customer = Customer(request.json['name'])
     g.db_session.add(customer)
     g.db_session.commit()
-    return jsonify(customer.serialize())
+    return jsonify({'message': f'Customer created'}), 200
+
+@customer_routes.route('/customers/<int:customer_id>', methods=['DELETE'])
+def delete_customer(customer_id):
+    customer = g.db_session.query(Customer).get(customer_id)
+    g.db_session.delete(customer)
+    g.db_session.commit()
+    return jsonify({'message': f'Customer {customer_id} deleted'}), 200
 
 # Routes to obtain details for customers
 
