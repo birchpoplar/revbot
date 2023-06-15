@@ -19,7 +19,7 @@ def create_contract():
     customer.contracts.append(contract)
     # g.db_session.add(contract)
     g.db_session.commit()
-    return jsonify({'message': f'Contract created for customer {customer_id} in month {booked_month}'}), 200
+    return jsonify({'message': f'Contract {contract.id} created for customer {customer_id} in month {booked_month}', 'id': contract.id}), 200
 
 @contract_routes.route('/contracts/<int:contract_id>', methods=['DELETE'])
 def delete_contract(contract_id):

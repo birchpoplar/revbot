@@ -25,7 +25,7 @@ def create_revenuesegment():
     
     contract.revenue_segments.append(revenuesegment)
     g.db_session.commit()
-    return jsonify({'message': f'Revenue segment created for contract {contract.id}'}), 200
+    return jsonify({'message': f'Revenue segment {revenuesegment.id} created for contract {contract.id}', 'id': revenuesegment.id}), 200
 
 @revenuesegment_routes.route('/revenuesegments/<int:revenuesegment_id>', methods=['DELETE'])
 def delete_revenuesegment(revenuesegment_id):

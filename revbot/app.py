@@ -5,6 +5,7 @@ from revbot.routes.customer_routes import customer_routes
 from revbot.routes.contract_routes import contract_routes
 from revbot.routes.revenuesegment_routes import revenuesegment_routes
 from revbot.routes.dataframe_routes import dataframe_routes
+from revbot.routes.clear_routes import clear_routes
 
 def create_app():
     config_class = os.getenv('FLASK_CONFIG', 'Config')
@@ -18,6 +19,7 @@ def create_app():
     app.register_blueprint(contract_routes)
     app.register_blueprint(revenuesegment_routes)
     app.register_blueprint(dataframe_routes)
+    app.register_blueprint(clear_routes)
 
     @app.before_request
     def before_request():

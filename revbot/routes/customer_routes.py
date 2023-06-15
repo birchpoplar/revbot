@@ -11,7 +11,7 @@ def create_customer():
     customer = Customer(request.json['name'])
     g.db_session.add(customer)
     g.db_session.commit()
-    return jsonify({'message': f'Customer created'}), 200
+    return jsonify({'message': f'Customer {customer.id} created', 'id': customer.id}), 200
 
 @customer_routes.route('/customers/<int:customer_id>', methods=['DELETE'])
 def delete_customer(customer_id):
