@@ -1,6 +1,4 @@
-from revbot.app import create_app
-
-app = create_app()
+from revbot.app import app
 
 if __name__ == "__main__":
     app.run(debug=True)
