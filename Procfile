@@ -1,1 +1,1 @@
-web: gunicorn app:revbot.app
+web: gunicorn revbot:app
