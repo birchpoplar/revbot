@@ -1,3 +1,5 @@
+import os
+
 class Config(object):
     # Default Configuration
     DEBUG = False
@@ -5,6 +7,7 @@ class Config(object):
 
     # Database
     SQLALCHEMY_DATABASE_URI = 'postgresql://dev:revbotdev@localhost/myrevbot'
+    SQLALCHEMY_DATABASE_URI = os.getenv('DATABASE_URL', 'postgresql://dev:revbotdev@localhost/myrevbot')
 
 class ProductionConfig(Config):
     # Production specific configs

@@ -1,9 +1,10 @@
 from sqlalchemy import create_engine, MetaData
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm import sessionmaker, scoped_session
 
 def create_engine_and_session(app):
     engine = create_engine(app.config['SQLALCHEMY_DATABASE_URI'], echo=True)
-    Session = sessionmaker(bind=engine)
+    session_factory = sessionmaker(bind=engine)
+    Session = scoped_session(session_factory)
 
     from revbot.models import Base, Customer, Contract, RevenueSegment, Invoice 
 
@@ -15,12 +16,5 @@ def create_engine_and_session(app):
 
         # Then create all tables
         Base.metadata.create_all(engine)
-
-    def create_session():
-        return Session()
-
-    def remove_session(session):
-        session.close()
-        
-    return reset_and_init_db, create_session, remove_session
-
+ 
+    return reset_and_init_db, Session
