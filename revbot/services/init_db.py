@@ -11,8 +11,8 @@ def create_engine_and_session(app):
     def reset_and_init_db():
         # First reflect and drop all tables to delete contents of database
         meta = MetaData()
-        meta.reflect(bind=engine)
-        meta.drop_all(bind=engine)
+        # meta.reflect(bind=engine)
+        # meta.drop_all(bind=engine)
 
         # Then create all tables
         Base.metadata.create_all(engine)
