@@ -10,7 +10,7 @@ def display_df(df):
     df_transposed = df.T
 
     # Create a table
-    table = Table(show_header=True, header_style="bold magenta")
+    table = Table(show_header=True, header_style="bold magenta", expand=True)
 
     # Add the index as the first column
     table.add_column("Metrics")

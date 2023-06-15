@@ -1,3 +1,4 @@
+import json
 from flask import Blueprint, jsonify, request, g
 from revbot.models import Customer, Contract, RevenueSegment, Invoice
 from revbot.services import populate_dataframe
@@ -21,4 +22,4 @@ def get_dataframe():
     df = populate_dataframe(revenue_segments, invoices, df, num_months)
     
     # Convert the DataFrame to JSON and return it
-    return jsonify(df.to_json(orient="split"))
+    return jsonify(json.loads(df.to_json(orient="split")))

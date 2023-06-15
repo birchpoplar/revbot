@@ -11,7 +11,7 @@ def create_contract():
     customer_id = request.json['customer_id']
     booked_month = request.json['booked_month']
 
-    customer = g.db_session.query(Customer).get(customer_id)
+    customer = g.db_session.get(Customer, customer_id)
     if customer is None:
         return jsonify({'error': 'Customer not found'}), 404
     
@@ -23,7 +23,7 @@ def create_contract():
 
 @contract_routes.route('/contracts/<int:contract_id>', methods=['DELETE'])
 def delete_contract(contract_id):
-    contract = g.db_session.query(Contract).get(contract_id)
+    contract = g.db_session.get(Contract, contract_id)
     g.db_session.delete(contract)
     g.db_session.commit()
     return jsonify({'message': f'Contract {contract_id} deleted'}), 200

@@ -8,7 +8,7 @@ revenuesegment_routes = Blueprint('revenuesegment_routes', __name__)
 
 @revenuesegment_routes.route('/revenuesegments', methods=['POST'])
 def create_revenuesegment():
-    contract = g.db_session.query(Contract).get(request.json['contract_id'])
+    contract = g.db_session.get(Contract, request.json['contract_id'])
     if contract is None:
         return jsonify({'error': 'Contract not found'}), 404
 
