@@ -1,1 +1,1 @@
-web: gunicorn revbot.app:create_app
+web: gunicorn wsgi:application
