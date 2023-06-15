@@ -35,6 +35,15 @@ Creates a new customer
 {
     "name": "string"
 }
+```
+
+**Response:**
+```json
+{
+    "id": "int",
+    "message": "string"
+}
+```
 
 ## Some Configuration Notes
 
