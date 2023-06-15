@@ -2,7 +2,7 @@
 
 ## Goals
 
-Create environment with API endpoints for creating and managing customers, contracts, revenue segments and invoices in a SaaS-like construct. Ultimate goal is to interface with an LLM enabling natural language specification of revenue contracts.
+Create environment with API endpoints for creating and managing customers, contracts, revenue segments and invoices in a SaaS-like construct. Ultimate goal is to interface with an LLM enabling natural language specification of revenue contracts and demonstrate the translation to an accounting ledger with compliant revenue recognition.
 
 ## Main Definitions
 
@@ -24,6 +24,17 @@ Objects are created and linked together. A `populate_dataframe` function builds 
 The `DevelopmentConfig` is for a localhost PostgreSQL database. The `TestingConfig` can use that or a temporary sqlite config.
 
 Next step: cloud-hosted, probably Heroku, for `ProductionConfig`.
+
+## API Definitions
+
+### `POST /customers`
+Creates a new customer
+
+**Request Body:**
+```json
+{
+    "name": "string"
+}
 
 ## Some Configuration Notes
 
