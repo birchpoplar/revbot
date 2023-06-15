@@ -8,6 +8,8 @@ class Config(object):
     # Database
     SQLALCHEMY_DATABASE_URI = 'postgresql://dev:revbotdev@localhost/myrevbot'
     SQLALCHEMY_DATABASE_URI = os.getenv('DATABASE_URL', 'postgresql://dev:revbotdev@localhost/myrevbot')
+    if SQLALCHEMY_DATABASE_URI.startswith("postgres://"):
+        SQLALCHEMY_DATABASE_URI = SQLALCHEMY_DATABASE_URI.replace("postgres://", "postgresql://", 1)
 
 class ProductionConfig(Config):
     # Production specific configs
