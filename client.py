@@ -4,13 +4,11 @@ import json
 import os
 from revbot.services.display_df import display_df
 
-
-
 # Set URL to the Heroku app if running in production, otherwise set to localhost
 #if os.getenv('FLASK_CONFIG') == 'ProductionConfig':
-url = 'https://bp-revbot-c76c85faef18.herokuapp.com'
+# url = 'https://bp-revbot-c76c85faef18.herokuapp.com'
 #else:
-#    url = 'http://localhost:5000'
+url = 'http://localhost:5000'
 
 def create_customer():
     data = {
