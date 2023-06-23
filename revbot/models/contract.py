@@ -23,5 +23,5 @@ class Contract(Base):
             'id': self.id,
             'booked_month': self.booked_month,
             'customer': self.customer.serialize(),
-            'revenue_segments': [revenue_segment.serialize() for revenue_segment in self.revenue_segments]
+            'revenue_segments': [revenue_segment.id for revenue_segment in self.revenue_segments]
         }

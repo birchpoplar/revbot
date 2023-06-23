@@ -17,5 +17,5 @@ class Customer(Base):
         return {
             'id': self.id,
             'name': self.name,
-            'contracts': [contract.serialize() for contract in self.contracts]
+            'contracts': [contract.id for contract in self.contracts]
         }
