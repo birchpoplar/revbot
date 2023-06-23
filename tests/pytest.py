@@ -1,11 +1,13 @@
 import pytest
 import json
+import os
 from flask import g 
 from revbot.app import create_app
 
 @pytest.fixture(scope='module')
 def client():
-    app = create_app()  # create an instance of your Flask application
+    config_class = os.getenv('FLASK_CONFIG', 'Config')
+    app = create_app(config_class) # Create an app instance
 
     with app.test_client() as client:  # create a test client
         with app.app_context():
@@ -19,7 +21,7 @@ def test_create_customer(client):
     )
     data = json.loads(response.get_data(as_text=True))
     assert response.status_code == 200
-    assert data['message'] == 'Customer created'
+    assert data['message'] == f'Customer {data["id"]} created'
 
 def test_create_contract(client):
     response = client.post(
@@ -29,7 +31,7 @@ def test_create_contract(client):
     )
     data = json.loads(response.get_data(as_text=True))
     assert response.status_code == 200
-    assert data['message'] == 'Contract created for customer 1 in month 1'
+    assert data['message'] == f'Contract {data["id"]} created for customer 1 in month 1'
 
 def test_create_revenuesegment(client):
     response = client.post(
@@ -39,4 +41,4 @@ def test_create_revenuesegment(client):
     )
     data = json.loads(response.get_data(as_text=True))
     assert response.status_code == 200
-    assert data['message'] == 'Revenue segment created for contract 1'
+    assert data['message'] == f'Revenue segment {data["id"]} created for contract 1'
