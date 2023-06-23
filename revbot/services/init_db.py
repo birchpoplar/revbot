@@ -2,7 +2,11 @@ from sqlalchemy import create_engine, MetaData
 from sqlalchemy.orm import sessionmaker, scoped_session
 
 def create_engine_and_session(app):
-    engine = create_engine(app.config['SQLALCHEMY_DATABASE_URI'], echo=True, connect_args={'sslmode':'require'})
+    if app.config['SQLALCHEMY_DATABASE_URI'].startswith('sqlite'):
+        engine = create_engine(app.config['SQLALCHEMY_DATABASE_URI'], echo=True)
+    else:
+        engine = create_engine(app.config['SQLALCHEMY_DATABASE_URI'], echo=True, connect_args={'sslmode':'require'})
+
     session_factory = sessionmaker(bind=engine)
     Session = scoped_session(session_factory)
 

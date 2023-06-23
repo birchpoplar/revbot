@@ -29,7 +29,7 @@ def create_revenuesegment():
 
 @revenuesegment_routes.route('/revenuesegments/<int:revenuesegment_id>', methods=['DELETE'])
 def delete_revenuesegment(revenuesegment_id):
-    revenuesegment = g.db_session.query(RevenueSegment).get(revenuesegment_id)
+    revenuesegment = g.db_session.get(RevenueSegment, revenuesegment_id)
     g.db_session.delete(revenuesegment)
     g.db_session.commit()
     return jsonify({'message': f'Revenue segment {revenuesegment_id} deleted'}), 200

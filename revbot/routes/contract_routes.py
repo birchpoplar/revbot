@@ -24,6 +24,8 @@ def create_contract():
 @contract_routes.route('/contracts/<int:contract_id>', methods=['DELETE'])
 def delete_contract(contract_id):
     contract = g.db_session.get(Contract, contract_id)
+    if contract is None:
+        return jsonify({'message': f'Contract {contract_id} not found'}), 404
     g.db_session.delete(contract)
     g.db_session.commit()
     return jsonify({'message': f'Contract {contract_id} deleted'}), 200

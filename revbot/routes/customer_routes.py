@@ -15,7 +15,9 @@ def create_customer():
 
 @customer_routes.route('/customers/<int:customer_id>', methods=['DELETE'])
 def delete_customer(customer_id):
-    customer = g.db_session.query(Customer).get(customer_id)
+    customer = g.db_session.get(Customer, customer_id)
+    if customer is None:
+        return jsonify({'message': f'Customer {customer_id} not found'}), 404
     g.db_session.delete(customer)
     g.db_session.commit()
     return jsonify({'message': f'Customer {customer_id} deleted'}), 200
