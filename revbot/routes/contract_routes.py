@@ -35,7 +35,7 @@ def delete_contract(contract_id):
 @contract_routes.route('/contracts', methods=['GET'])
 def get_contracts():
     contracts = g.db_session.query(Contract).all()
-    return jsonify([c.serialize() for c in contracts])
+    return jsonify({'message': 'Contract list retrieved', 'data': [c.serialize() for c in contracts]})
 
 @contract_routes.route('/contracts/<int:contract_id>', methods=['GET'])
 def get_contract(contract_id):

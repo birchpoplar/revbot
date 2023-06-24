@@ -27,7 +27,7 @@ def delete_customer(customer_id):
 @customer_routes.route('/customers', methods=['GET'])
 def get_customers():
     customers = g.db_session.query(Customer).all()
-    return jsonify([c.serialize() for c in customers])
+    return jsonify({'message': f'Customer list retrieved', 'data': [c.serialize() for c in customers]})
 
 @customer_routes.route('/customers/<int:customer_id>', methods=['GET'])
 def get_customer(customer_id):
