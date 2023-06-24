@@ -74,3 +74,32 @@ def test_delete_customer(client):
     data = json.loads(response.get_data(as_text=True))
     assert response.status_code == 200
     assert data['message'] == f'Customer 1 deleted'
+
+
+# Test get tests
+
+def test_get_customer_list(client):
+    temp = client.post(
+        "/customers",
+        data=json.dumps(dict(name="Test customer", email="test@example.com")),
+        content_type='application/json',
+    )
+    response = client.get(
+        "/customers"
+    )
+    data = json.loads(response.get_data(as_text=True))
+    assert response.status_code == 200
+    assert data['message'] == f'Customer list retrieved'
+
+def test_get_contract_list(client):
+    temp = client.post(
+        "/contracts",
+        data=json.dumps(dict(booked_month=1, customer_id=1)),
+        content_type='application/json',
+    )
+    response = client.get(
+        "/contracts"
+    )
+    data = json.loads(response.get_data(as_text=True))
+    assert response.status_code == 200
+    assert data['message'] == f'Contract list retrieved'
