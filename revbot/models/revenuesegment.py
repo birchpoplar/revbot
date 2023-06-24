@@ -14,7 +14,7 @@ class RevenueSegment(Base):
     name = Column(String) 
     type = Column(Enum('Service', 'Product', name='revenue_segment_type'))
     invoice_schedule = Column(Enum('Upfront', 'Monthly', name='invoice_schedule'))
-    _unbilled_balance = Column(Integer) # unbilled balance for this revenue segment (private variable)
+    # _unbilled_balance = Column(Integer) # unbilled balance for this revenue segment (private variable)
     
     # Parent is Contract
     contract_id = Column(Integer, ForeignKey('contracts.id'))
@@ -66,5 +66,5 @@ class RevenueSegment(Base):
             'type': self.type,
             'invoice_schedule': self.invoice_schedule,
             'invoices': [invoice.serialize() for invoice in self.invoices],
-            'unbilled_balance': self.get_unbilled_balance()
+            # 'unbilled_balance': self.get_unbilled_balance()
         }
