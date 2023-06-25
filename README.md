@@ -6,6 +6,12 @@ Create environment with API endpoints for creating and managing customers, contr
 
 Interface with an LLM enabling natural language specification of revenue contracts and demonstrate the translation to an accounting ledger with compliant revenue recognition. See https://github.com/birchpoplar/revbot_agent for working prototype, using the https://www.fixie.ai/ platform.
 
+## Status
+
+**Backend** - Flask API, operational although very limited validation checking or testing
+
+**Frontend** - React, not operational
+
 ## Main Definitions
 
 - **Customer** Simple customer with name
