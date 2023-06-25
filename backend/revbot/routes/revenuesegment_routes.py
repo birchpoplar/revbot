@@ -43,10 +43,3 @@ def get_revenuesegments():
 def get_revenuesegment(revenuesegment_id):
     revenuesegment = g.db_session.get(RevenueSegment, revenuesegment_id)
     return jsonify(revenuesegment.serialize())
-
-@revenuesegment_routes.route('/contracts/<int:contract_id>/revenuesegments', methods=['GET'])
-def get_revenuesegments_for_contract(contract_id):
-    contract = g.db_session.get(Contract, contract_id)
-    if contract is None:
-        return jsonify({'error': 'Contract not found'}), 404
-    return jsonify([r.serialize() for r in contract.revenue_segments])

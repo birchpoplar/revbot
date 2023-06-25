@@ -15,7 +15,7 @@ def get_dataframe():
     invoices = g.db_session.query(Invoice).all()
     
     # Initialize dataframe with zero values
-    num_months = 36
+    num_months = 48
     df = pd.DataFrame(0, index=range(1, num_months), columns=['TCV', 'Rev', 'DefRev', 'UnbilledRev', 'AR', 'Cash'])
 
     # Populate the DataFrame

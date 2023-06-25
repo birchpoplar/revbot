@@ -37,17 +37,14 @@ def get_contracts():
     contracts = g.db_session.query(Contract).all()
     return jsonify({'message': 'Contract list retrieved', 'data': [c.serialize() for c in contracts]})
 
-@contract_routes.route('/contracts/<int:contract_id>', methods=['GET'])
+@contract_routes.route('/contracts/id/<int:contract_id>', methods=['GET'])
 def get_contract(contract_id):
     contract = g.db_session.query(Contract).get(contract_id)
     return jsonify(contract.serialize())
 
-# Route to get contracts for a customer
-
-@contract_routes.route('/customers/<int:customer_id>/contracts', methods=['GET'])
-def get_contracts_for_customer(customer_id):
-    customer = g.db_session.query(Customer).get(customer_id)
-    if customer is None:
-        return jsonify({'error': 'Customer not found'}), 404
-    return jsonify([c.serialize() for c in customer.contracts])
-
+@contract_routes.route('/contracts/id/<int:contract_id>/revenuesegments', methods=['GET'])
+def get_revenuesegments_for_contract(contract_id):
+    contract = g.db_session.get(Contract, contract_id)
+    if contract is None:
+        return jsonify({'error': 'Contract not found'}), 404
+    return jsonify([r.serialize() for r in contract.revenue_segments])
