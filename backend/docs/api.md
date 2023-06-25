@@ -1,20 +1,3 @@
 # API Definitions
 
-## `POST /customers`
-Creates a new customer
-
-**Request Body:**
-```json
-{
-    "name": "string"
-}
-```
-
-**Response:**
-```json
-{
-    "id": "int",
-    "message": "string"
-}
-```
-
+The API is very much in flux, can find the latest code in revbot/routes.

@@ -2,7 +2,9 @@
 
 ## Goals
 
-Create environment with API endpoints for creating and managing customers, contracts, revenue segments and invoices in a SaaS-like construct. Ultimate goal is to interface with an LLM enabling natural language specification of revenue contracts and demonstrate the translation to an accounting ledger with compliant revenue recognition.
+Create environment with API endpoints for creating and managing customers, contracts, revenue segments and invoices in a SaaS-like construct.
+
+Interface with an LLM enabling natural language specification of revenue contracts and demonstrate the translation to an accounting ledger with compliant revenue recognition. See https://github.com/birchpoplar/revbot_agent for working prototype, using the https://www.fixie.ai/ platform.
 
 ## Main Definitions
 
