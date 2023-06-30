@@ -19,6 +19,14 @@ Interface with an LLM enabling natural language specification of revenue contrac
 - **RevenueSegment** Linked to a contract. A RevenueSegment comprises a revenue recognition schedule and associated invoices.
 - **Invoice** Linked to a RevenueSegment.
 
+## Database Relationships
+
+The four main database classes are related as shown below:
+
+![database structure](docs/images/db_structure/revbot_db.png)
+
+## Populate Dataframe
+
 Objects are created and linked together. A `populate_dataframe` function builds a Pandas dataframe that shows the following in a typical financial statement format:
 - TCV, Total Contract Value
 - Rev, Revenue
