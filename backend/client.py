@@ -56,7 +56,11 @@ def get_dataframe():
     data = response.json()
 
     df = pd.DataFrame(data=data['data'], index=data['index'], columns=data['columns'])
-    
+
+    # Save the transposed dataframe to csv
+    df_t = df.transpose()
+    df_t.to_csv('dataframe_output.csv') 
+
     # Display the dataframe
     display_df(df)
 
